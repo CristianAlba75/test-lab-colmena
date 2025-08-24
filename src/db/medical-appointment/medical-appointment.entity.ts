@@ -39,17 +39,23 @@ export class MedicalAppointmentEntity {
   })
   dateUpdateStatus?: Date;
 
+  @Column({ name: 'doctor_id', type: 'uuid' })
+  doctorId: string;
+
+  @Column({ name: 'patient_id', type: 'uuid' })
+  patientId: string;
+
   @ManyToOne(() => DoctorEntity, (doctor) => doctor.medicalAppointments)
   @JoinColumn({ name: 'doctor_id' })
-  doctor: DoctorEntity;
+  doctor?: DoctorEntity;
 
   @ManyToOne(() => PatientEntity, (patient) => patient.medicalAppointments)
   @JoinColumn({ name: 'patient_id' })
-  patient: PatientEntity;
+  patient?: PatientEntity;
 
   @OneToMany(
     () => MedicalOrderEntity,
     (medicalOrder) => medicalOrder.medicalAppointment,
   )
-  medicalOrders: MedicalOrderEntity[];
+  medicalOrders?: MedicalOrderEntity[];
 }

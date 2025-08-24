@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DoctorModule } from './modules/doctor/doctor.module';
 import { dataSourceOptions } from './config/db/typeorm.config';
 import { PatientModule } from './modules/patient/patient.module';
-import { DoctorModule } from './modules/doctor/doctor.module';
+import { MedicalAppointmentModule } from './modules/medical-appointment/medical-appointment.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { DoctorModule } from './modules/doctor/doctor.module';
     ConfigModule.forRoot({ isGlobal: true }),
     PatientModule,
     DoctorModule,
+    MedicalAppointmentModule,
   ],
   controllers: [],
   providers: [],
