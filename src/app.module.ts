@@ -7,6 +7,7 @@ import { PatientModule } from './modules/patient/patient.module';
 import { MedicationModule } from './modules/medication/medication.module';
 import { MedicalOrderModule } from './modules/medical-order/medical-order.module';
 import { MedicalAppointmentModule } from './modules/medical-appointment/medical-appointment.module';
+import { MedicalOrderMedicationModule } from './modules/medical-order-medication/medical-order-medication.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { MedicalAppointmentModule } from './modules/medical-appointment/medical-
     MedicalAppointmentModule,
     MedicalOrderModule,
     MedicationModule,
+    MedicalOrderMedicationModule,
   ],
   controllers: [],
   providers: [],
