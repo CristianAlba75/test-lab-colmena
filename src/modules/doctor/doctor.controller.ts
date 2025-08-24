@@ -7,6 +7,7 @@ import {
   Body,
   Logger,
   HttpCode,
+  Query,
 } from '@nestjs/common';
 import { DoctorService } from './doctor.service';
 import { CreateDoctorDto, DoctorBasicDto, UpdateDoctorDto } from './doctor.dto';
@@ -29,6 +30,27 @@ export class DoctorController {
       return newDoctor;
     } catch (error) {
       this.logger.log(`Error creating doctor`);
+      throw error;
+    }
+  }
+
+  @Get('availability')
+  async findAvailableByDate(
+    @Query('selectedDate') selectedDate: string,
+  ): Promise<DoctorBasicDto[]> {
+    try {
+      this.logger.log(
+        `Starting fetch all doctors available for date: ${selectedDate}`,
+      );
+
+      const availableDoctors =
+        await this.doctorService.findAvailableDoctorsByDate(selectedDate);
+
+      this.logger.log(`Available doctors fetched successfully`);
+
+      return availableDoctors;
+    } catch (error) {
+      this.logger.log(`Error fetching available doctors`);
       throw error;
     }
   }

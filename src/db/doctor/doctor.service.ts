@@ -43,4 +43,17 @@ export class DoctorDbService {
     if (!doctor) return null;
     return doctor;
   }
+
+  async findAvailableDoctorsByDate(date: string): Promise<DoctorEntity[]> {
+    return this.doctorRepository
+      .createQueryBuilder('doctor')
+      .leftJoin(
+        'doctor.medicalAppointments',
+        'medicalAppointments',
+        'medicalAppointments.appointmentDate = :date',
+        { date },
+      )
+      .where('medicalAppointments.medicalAppointmentId IS NULL')
+      .getMany();
+  }
 }

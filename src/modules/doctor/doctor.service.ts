@@ -55,4 +55,17 @@ export class DoctorService {
 
     return this.doctorDbService.update(doctorId, params);
   }
+
+  async findAvailableDoctorsByDate(selectedDate: string): Promise<IDoctor[]> {
+    this.logger.log(`Verifying available for: ${selectedDate}`);
+    const availableDoctors =
+      await this.doctorDbService.findAvailableDoctorsByDate(selectedDate);
+
+    if (availableDoctors.length === 0) {
+      this.logger.log(`There are not available doctor for selected date`);
+      throw new BadRequestException(`Not available doctor for ${selectedDate}`);
+    }
+
+    return availableDoctors;
+  }
 }
