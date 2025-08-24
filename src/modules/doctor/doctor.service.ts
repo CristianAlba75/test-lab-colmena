@@ -12,7 +12,7 @@ export class DoctorService {
     const existingDoctor = await this.findOneById(params.id);
 
     if (existingDoctor) {
-      this.logger.log(`Doctor already exist`);
+      this.logger.error(`Doctor already exist`);
       throw new BadRequestException(
         `Doctor with ID ${params.id} already exists`,
       );
@@ -29,7 +29,7 @@ export class DoctorService {
     const existingDoctor = await this.doctorDbService.findOne(doctorId);
 
     if (!existingDoctor) {
-      this.logger.log(`Doctor does not exist`);
+      this.logger.error(`Doctor does not exist`);
       throw new BadRequestException(
         `Doctor with ID ${doctorId} does not exists`,
       );
@@ -47,7 +47,7 @@ export class DoctorService {
     const existingDoctor = await this.doctorDbService.findOne(doctorId);
 
     if (!existingDoctor) {
-      this.logger.log(`Doctor does not exist`);
+      this.logger.error(`Doctor does not exist`);
       throw new BadRequestException(
         `Doctor with ID ${doctorId} does not exists`,
       );

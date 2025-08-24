@@ -34,7 +34,7 @@ export class MedicalOrderController {
 
       return newMedicalOrder;
     } catch (error) {
-      this.logger.log(`Error creating medical order`);
+      this.logger.error(`Error creating medical order`);
       throw error;
     }
   }
@@ -50,7 +50,7 @@ export class MedicalOrderController {
 
       return medicalOrders;
     } catch (error) {
-      this.logger.log(`Error fetching medical orders`);
+      this.logger.error(`Error fetching medical orders`);
       throw error;
     }
   }
@@ -71,7 +71,7 @@ export class MedicalOrderController {
 
       return medicalOrder;
     } catch (error) {
-      this.logger.log(
+      this.logger.error(
         `Error fetching medical order by medical order id ${medicalOrderId} `,
       );
       throw error;
@@ -96,7 +96,7 @@ export class MedicalOrderController {
 
       return medicalOrders;
     } catch (error) {
-      this.logger.log(
+      this.logger.error(
         `Error fetching medical orders by medical appointment id ${medicalAppointmentId} `,
       );
       throw error;

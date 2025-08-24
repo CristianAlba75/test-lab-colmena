@@ -60,7 +60,7 @@ export class MedicalAppointmentController {
 
       return medicalAppointments;
     } catch (error) {
-      this.logger.log(`Error fetching medical appointments by params `);
+      this.logger.error(`Error fetching medical appointments by params `);
       throw error;
     }
   }
@@ -77,7 +77,7 @@ export class MedicalAppointmentController {
 
       return medicalAppointments;
     } catch (error) {
-      this.logger.log(`Error fetching medical appointments`);
+      this.logger.error(`Error fetching medical appointments`);
       throw error;
     }
   }
@@ -99,7 +99,7 @@ export class MedicalAppointmentController {
 
       return medicalAppointment;
     } catch (error) {
-      this.logger.log(
+      this.logger.error(
         `Error fetching medical appointment by medical appointment id ${medicalAppointmentId} `,
       );
       throw error;
@@ -126,7 +126,7 @@ export class MedicalAppointmentController {
 
       return updatedMedicalAppointment;
     } catch (error) {
-      this.logger.log(`Error updating medical appointment`);
+      this.logger.error(`Error updating medical appointment`);
       throw error;
     }
   }

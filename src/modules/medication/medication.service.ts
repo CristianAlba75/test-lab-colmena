@@ -12,7 +12,7 @@ export class MedicationService {
     const existingMedication = await this.findByName(params.name);
 
     if (existingMedication) {
-      this.logger.log(`Medication already exist`);
+      this.logger.error(`Medication already exist`);
       throw new BadRequestException(
         `Medication with name ${params.name} already exists`,
       );

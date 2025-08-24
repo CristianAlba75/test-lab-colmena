@@ -29,7 +29,7 @@ export class DoctorController {
 
       return newDoctor;
     } catch (error) {
-      this.logger.log(`Error creating doctor`);
+      this.logger.error(`Error creating doctor`);
       throw error;
     }
   }
@@ -50,7 +50,7 @@ export class DoctorController {
 
       return availableDoctors;
     } catch (error) {
-      this.logger.log(`Error fetching available doctors`);
+      this.logger.error(`Error fetching available doctors`);
       throw error;
     }
   }
@@ -66,7 +66,7 @@ export class DoctorController {
 
       return doctors;
     } catch (error) {
-      this.logger.log(`Error fetching doctors`);
+      this.logger.error(`Error fetching doctors`);
       throw error;
     }
   }
@@ -84,7 +84,7 @@ export class DoctorController {
 
       return doctor;
     } catch (error) {
-      this.logger.log(`Error fetching doctor by doctor ${doctorId} `);
+      this.logger.error(`Error fetching doctor by doctor ${doctorId} `);
       throw error;
     }
   }
@@ -103,7 +103,7 @@ export class DoctorController {
 
       return updatedDoctor;
     } catch (error) {
-      this.logger.log(`Error updating doctor`);
+      this.logger.error(`Error updating doctor`);
       throw error;
     }
   }

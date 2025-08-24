@@ -32,7 +32,7 @@ export class PatientController {
 
       return newPatient;
     } catch (error) {
-      this.logger.log(`Error creating patient`);
+      this.logger.error(`Error creating patient`);
       throw error;
     }
   }
@@ -48,7 +48,7 @@ export class PatientController {
 
       return patients;
     } catch (error) {
-      this.logger.log(`Error fetching patients`);
+      this.logger.error(`Error fetching patients`);
       throw error;
     }
   }
@@ -66,7 +66,7 @@ export class PatientController {
 
       return patient;
     } catch (error) {
-      this.logger.log(`Error fetching patient by patient ${patientId} `);
+      this.logger.error(`Error fetching patient by patient ${patientId} `);
       throw error;
     }
   }
@@ -88,7 +88,7 @@ export class PatientController {
 
       return updatedPatient;
     } catch (error) {
-      this.logger.log(`Error updating patient`);
+      this.logger.error(`Error updating patient`);
       throw error;
     }
   }

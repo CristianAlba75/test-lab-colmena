@@ -29,7 +29,7 @@ export class MedicationController {
 
       return newMedication;
     } catch (error) {
-      this.logger.log(`Error creating medication`);
+      this.logger.error(`Error creating medication`);
       throw error;
     }
   }
@@ -45,7 +45,7 @@ export class MedicationController {
 
       return doctors;
     } catch (error) {
-      this.logger.log(`Error fetching medications`);
+      this.logger.error(`Error fetching medications`);
       throw error;
     }
   }
@@ -67,7 +67,7 @@ export class MedicationController {
 
       return medication;
     } catch (error) {
-      this.logger.log(
+      this.logger.error(
         `Error fetching medication by medication id ${medicationId} `,
       );
       throw error;
@@ -89,7 +89,7 @@ export class MedicationController {
 
       return medicationByDisease;
     } catch (error) {
-      this.logger.log(`Error fetching medication by disease ${disease} `);
+      this.logger.error(`Error fetching medication by disease ${disease} `);
       throw error;
     }
   }

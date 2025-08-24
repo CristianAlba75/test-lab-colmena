@@ -19,7 +19,7 @@ export class MedicalOrderService {
       await this.medicalAppointmentService.findOne(params.medicalAppointmentId);
 
     if (!existingMedicalAppointment) {
-      this.logger.log(`Medical appointment does not exists`);
+      this.logger.error(`Medical appointment does not exists`);
       throw new BadRequestException(
         `Medical appointment with ID ${params.medicalAppointmentId} does not exists`,
       );
@@ -39,7 +39,7 @@ export class MedicalOrderService {
       await this.medicalOrderDbService.findOneByMedicalOrderId(medicalOrderId);
 
     if (!existingMedicalOrder) {
-      this.logger.log(`Medical order does not exist`);
+      this.logger.error(`Medical order does not exist`);
       throw new BadRequestException(
         `Medical order with ID ${medicalOrderId} does not exists`,
       );
@@ -60,7 +60,7 @@ export class MedicalOrderService {
       );
 
     if (existingMedicalOrders.length === 0) {
-      this.logger.log(
+      this.logger.error(
         `There are not available medical orders for medical appointment`,
       );
       throw new BadRequestException(
