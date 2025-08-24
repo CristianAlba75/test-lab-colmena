@@ -54,7 +54,9 @@ export class PatientController {
   }
 
   @Get(':patientId')
-  async findByPatientId(@Param('patientId') patientId: string) {
+  async findByPatientId(
+    @Param('patientId') patientId: string,
+  ): Promise<PatientBasicDto> {
     try {
       this.logger.log(`Starting find patient by patient id: ${patientId}`);
 

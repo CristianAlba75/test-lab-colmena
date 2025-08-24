@@ -7,7 +7,7 @@ export class PatientService {
   private readonly logger = new Logger(PatientService.name);
   constructor(private readonly patientDbService: PatientDbService) {}
 
-  async create(params: Partial<IPatient>) {
+  async create(params: Partial<IPatient>): Promise<IPatient> {
     this.logger.log(`Verifying if patient exist: ${params.id}`);
     const existingPatient = await this.findOneById(params.id);
 
@@ -20,11 +20,11 @@ export class PatientService {
     return this.patientDbService.create(params);
   }
 
-  async findAll() {
+  async findAll(): Promise<IPatient[]> {
     return this.patientDbService.findAll();
   }
 
-  async findOne(patientId: string) {
+  async findOne(patientId: string): Promise<IPatient> {
     this.logger.log(`Verifying if patient exist: ${patientId}`);
     const existingPatient = await this.patientDbService.findOne(patientId);
 
@@ -38,11 +38,14 @@ export class PatientService {
     return existingPatient;
   }
 
-  async findOneById(id: string) {
+  async findOneById(id: string): Promise<IPatient> {
     return this.patientDbService.findOneById(id);
   }
 
-  async update(patientId: string, params: Partial<IPatient>) {
+  async update(
+    patientId: string,
+    params: Partial<IPatient>,
+  ): Promise<IPatient> {
     this.logger.log(`Verifying if patient exist: ${patientId}`);
     const existingPatient = await this.patientDbService.findOne(patientId);
 
