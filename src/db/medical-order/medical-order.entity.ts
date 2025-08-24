@@ -38,6 +38,9 @@ export class MedicalOrderEntity {
   })
   speciality: ESpecialty;
 
+  @Column({ name: 'medical_appointment_id', type: 'uuid' })
+  medicalAppointmentId: string;
+
   @ManyToOne(
     () => MedicalAppointmentEntity,
     (medicalAppointment) => medicalAppointment.medicalOrders,
