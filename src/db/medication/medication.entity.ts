@@ -22,12 +22,12 @@ export class MedicationEntity {
   })
   description: string;
 
-  @Column({
+  @Column('text', {
+    array: true,
     name: 'diseases',
-    type: 'text',
     nullable: false,
   })
-  diseases: string;
+  diseases: string[];
 
   @OneToMany(
     () => MedicalOrderMedicationEntity,
