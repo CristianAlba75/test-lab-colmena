@@ -63,4 +63,10 @@ export const ESpecialtyLabels: Record<ESpecialty, string> = {
   [ESpecialty.ONCOLOGY]: 'Oncología',
   [ESpecialty.INFECTIOLOGY]: 'Infectología',
   [ESpecialty.PULMONOLOGY]: 'Neumología',
+};
+
+export enum ERoles {
+  ADMIN = 'ADMIN',
+  DOCTOR = 'DOCTOR',
+  PATIENT = 'PATIENT',
 }

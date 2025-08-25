@@ -33,6 +33,10 @@ export class DoctorBasicDto {
 
   @IsDateString()
   admissionDate: Date;
+
+  @IsString()
+  @IsOptional()
+  password?: string;
 }
 
 export class CreateDoctorDto extends DoctorBasicDto {}

@@ -1,13 +1,18 @@
 import { IDoctor } from './doctor.interface';
+import { UserService } from '../user/user.service';
+import { ERoles } from '../../commons/enum/common';
 import { DoctorDbService } from '../../db/doctor/doctor.service';
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class DoctorService {
   private readonly logger = new Logger(DoctorService.name);
-  constructor(private readonly doctorDbService: DoctorDbService) {}
+  constructor(
+    private readonly doctorDbService: DoctorDbService,
+    private readonly userService: UserService,
+  ) {}
 
-  async create(params: Partial<IDoctor>): Promise<IDoctor> {
+  async create(params: Partial<IDoctor>, password: string): Promise<IDoctor> {
     this.logger.log(`Verifying if doctor exist: ${params.id}`);
     const existingDoctor = await this.findOneById(params.id);
 
@@ -17,6 +22,16 @@ export class DoctorService {
         `Doctor with ID ${params.id} already exists`,
       );
     }
+    this.logger.log(`Creating user related to doctor`);
+
+    await this.userService.create({
+      email: params.email,
+      passwordHash: password,
+      role: ERoles.DOCTOR,
+    });
+
+    this.logger.log(`Creating doctor`);
+
     return this.doctorDbService.create(params);
   }
 

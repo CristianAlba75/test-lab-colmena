@@ -8,22 +8,31 @@ import {
   Logger,
   HttpCode,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { DoctorService } from './doctor.service';
+import { ERoles } from '../../commons/enum/common';
+import { RoleGuard } from '../../shared/guards/role.guard';
+import { Role } from '../../shared/decorators/role.decorator';
+import { JwtAuthGuard } from '../../shared/guards/jwt.auth.guard';
 import { CreateDoctorDto, DoctorBasicDto, UpdateDoctorDto } from './doctor.dto';
 
+@UseGuards(JwtAuthGuard, RoleGuard)
 @Controller('doctors')
 export class DoctorController {
   private readonly logger = new Logger(DoctorController.name);
   constructor(private readonly doctorService: DoctorService) {}
 
+  @Role(ERoles.ADMIN)
   @Post()
   @HttpCode(200)
-  async create(@Body() params: CreateDoctorDto): Promise<DoctorBasicDto> {
+  async create(
+    @Body() { password, ...params }: CreateDoctorDto,
+  ): Promise<DoctorBasicDto> {
     try {
       this.logger.log(`Starting creation doctor: ${params.id}`);
 
-      const newDoctor = await this.doctorService.create(params);
+      const newDoctor = await this.doctorService.create(params, password);
 
       this.logger.log(`Doctor created successfully`);
 

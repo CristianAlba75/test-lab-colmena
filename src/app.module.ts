@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './modules/auth/auth.module';
 import { DoctorModule } from './modules/doctor/doctor.module';
 import { dataSourceOptions } from './config/db/typeorm.config';
 import { PatientModule } from './modules/patient/patient.module';
@@ -19,6 +20,7 @@ import { MedicalOrderMedicationModule } from './modules/medical-order-medication
     MedicalOrderModule,
     MedicationModule,
     MedicalOrderMedicationModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
