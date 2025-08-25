@@ -6,13 +6,19 @@ import {
   Body,
   Logger,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
 import {
   CreateMedicalOrderMedicationBasicDtoDto,
   MedicalOrderMedicationBasicDto,
 } from './medical-order-medication.dto';
+import { ERoles } from '../../commons/enum/common';
+import { RoleGuard } from '../../shared/guards/role.guard';
+import { Role } from '../../shared/decorators/role.decorator';
+import { JwtAuthGuard } from '../../shared/guards/jwt.auth.guard';
 import { MedicalOrderMedicationService } from './medical-order-medication.service';
 
+@UseGuards(JwtAuthGuard, RoleGuard)
 @Controller('medical-orders-medications')
 export class MedicalOrderMedicationController {
   private readonly logger = new Logger(MedicalOrderMedicationController.name);
@@ -20,6 +26,7 @@ export class MedicalOrderMedicationController {
     private readonly medicalOrderMedicationService: MedicalOrderMedicationService,
   ) {}
 
+  @Role([ERoles.DOCTOR])
   @Post()
   @HttpCode(200)
   async create(
@@ -42,6 +49,7 @@ export class MedicalOrderMedicationController {
     }
   }
 
+  @Role([ERoles.ADMIN])
   @Get()
   async findAll(): Promise<MedicalOrderMedicationBasicDto[]> {
     try {
@@ -59,6 +67,7 @@ export class MedicalOrderMedicationController {
     }
   }
 
+  @Role([ERoles.DOCTOR, ERoles.PATIENT])
   @Get(':id')
   async findOneById(
     @Param('id') id: string,
@@ -78,6 +87,7 @@ export class MedicalOrderMedicationController {
     }
   }
 
+  @Role([ERoles.DOCTOR, ERoles.PATIENT])
   @Get('medical-order/:medicalOrderId')
   async findAllByMedicalOrderId(
     @Param('medicalOrderId') medicalOrderId: string,

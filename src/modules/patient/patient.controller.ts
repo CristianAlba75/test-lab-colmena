@@ -12,21 +12,30 @@ import {
   Body,
   Logger,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
+import { ERoles } from '../../commons/enum/common';
 import { PatientService } from './patient.service';
+import { RoleGuard } from '../../shared/guards/role.guard';
+import { Role } from '../../shared/decorators/role.decorator';
+import { JwtAuthGuard } from '../../shared/guards/jwt.auth.guard';
 
+@UseGuards(JwtAuthGuard, RoleGuard)
 @Controller('patients')
 export class PatientController {
   private readonly logger = new Logger(PatientController.name);
   constructor(private readonly patientService: PatientService) {}
 
+  @Role([ERoles.ADMIN])
   @Post()
   @HttpCode(200)
-  async create(@Body() params: CreatePatientDto): Promise<PatientBasicDto> {
+  async create(
+    @Body() { password, ...params }: CreatePatientDto,
+  ): Promise<PatientBasicDto> {
     try {
       this.logger.log(`Starting creation patient: ${params.id}`);
 
-      const newPatient = await this.patientService.create(params);
+      const newPatient = await this.patientService.create(params, password);
 
       this.logger.log(`Patient created successfully`);
 
@@ -37,6 +46,7 @@ export class PatientController {
     }
   }
 
+  @Role([ERoles.ADMIN])
   @Get()
   async findAll(): Promise<PatientBasicDto[]> {
     try {
@@ -53,6 +63,7 @@ export class PatientController {
     }
   }
 
+  @Role([ERoles.ADMIN, ERoles.DOCTOR])
   @Get(':patientId')
   async findByPatientId(
     @Param('patientId') patientId: string,

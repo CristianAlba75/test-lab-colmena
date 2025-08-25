@@ -23,7 +23,7 @@ export class DoctorController {
   private readonly logger = new Logger(DoctorController.name);
   constructor(private readonly doctorService: DoctorService) {}
 
-  @Role(ERoles.ADMIN)
+  @Role([ERoles.ADMIN])
   @Post()
   @HttpCode(200)
   async create(
@@ -43,6 +43,7 @@ export class DoctorController {
     }
   }
 
+  @Role([ERoles.ADMIN])
   @Get('availability')
   async findAvailableByDate(
     @Query('selectedDate') selectedDate: string,
@@ -64,6 +65,7 @@ export class DoctorController {
     }
   }
 
+  @Role([ERoles.ADMIN])
   @Get()
   async findAll(): Promise<DoctorBasicDto[]> {
     try {
@@ -80,6 +82,7 @@ export class DoctorController {
     }
   }
 
+  @Role([ERoles.ADMIN])
   @Get(':doctorId')
   async findByDoctorId(
     @Param('doctorId') doctorId: string,
@@ -98,6 +101,7 @@ export class DoctorController {
     }
   }
 
+  @Role([ERoles.ADMIN])
   @Put(':doctorId')
   async update(
     @Param('doctorId') doctorId: string,

@@ -27,6 +27,10 @@ export class PatientBasicDto {
 
   @IsString()
   city: string;
+
+  @IsString()
+  @IsOptional()
+  password?: string;
 }
 
 export class CreatePatientDto extends PatientBasicDto {}

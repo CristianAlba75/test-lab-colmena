@@ -8,14 +8,20 @@ import {
   Logger,
   HttpCode,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import {
   CreateMedicalAppointmentDto,
   MedicalAppointmentBasicDto,
   UpdateMedicalAppointmentDto,
 } from './medical-appointment.dto';
+import { ERoles } from '../../commons/enum/common';
+import { RoleGuard } from '../../shared/guards/role.guard';
+import { Role } from '../../shared/decorators/role.decorator';
+import { JwtAuthGuard } from '../../shared/guards/jwt.auth.guard';
 import { MedicalAppointmentService } from './medical-appointment.service';
 
+@UseGuards(JwtAuthGuard, RoleGuard)
 @Controller('medical-appointments')
 export class MedicalAppointmentController {
   private readonly logger = new Logger(MedicalAppointmentController.name);
@@ -23,6 +29,7 @@ export class MedicalAppointmentController {
     private readonly medicalAppointmentService: MedicalAppointmentService,
   ) {}
 
+  @Role([ERoles.ADMIN])
   @Post()
   @HttpCode(200)
   async create(
@@ -46,6 +53,7 @@ export class MedicalAppointmentController {
     }
   }
 
+  @Role([ERoles.ADMIN])
   @Get('filter')
   async findOneByParams(
     @Query() params: Partial<MedicalAppointmentBasicDto>,
@@ -65,6 +73,7 @@ export class MedicalAppointmentController {
     }
   }
 
+  @Role([ERoles.ADMIN])
   @Get()
   async findAll(): Promise<MedicalAppointmentBasicDto[]> {
     try {
@@ -82,6 +91,7 @@ export class MedicalAppointmentController {
     }
   }
 
+  @Role([ERoles.ADMIN, ERoles.DOCTOR, ERoles.PATIENT])
   @Get(':medicalAppointmentId')
   async findByMedicalAppointmentId(
     @Param('medicalAppointmentId') medicalAppointmentId: string,
@@ -106,6 +116,7 @@ export class MedicalAppointmentController {
     }
   }
 
+  @Role([ERoles.DOCTOR])
   @Put(':medicalAppointmentId')
   async update(
     @Param('medicalAppointmentId') medicalAppointmentId: string,

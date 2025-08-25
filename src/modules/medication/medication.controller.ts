@@ -6,15 +6,22 @@ import {
   Body,
   Logger,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
+import { ERoles } from '../../commons/enum/common';
 import { MedicationService } from './medication.service';
+import { RoleGuard } from '../../shared/guards/role.guard';
+import { Role } from '../../shared/decorators/role.decorator';
+import { JwtAuthGuard } from '../../shared/guards/jwt.auth.guard';
 import { CreateMedicationDto, MedicationBasicDto } from './medication.dto';
 
+@UseGuards(JwtAuthGuard, RoleGuard)
 @Controller('medications')
 export class MedicationController {
   private readonly logger = new Logger(MedicationController.name);
   constructor(private readonly medicationService: MedicationService) {}
 
+  @Role([ERoles.ADMIN])
   @Post()
   @HttpCode(200)
   async create(
@@ -34,6 +41,7 @@ export class MedicationController {
     }
   }
 
+  @Role([ERoles.ADMIN, ERoles.DOCTOR])
   @Get()
   async findAll(): Promise<MedicationBasicDto[]> {
     try {
@@ -50,6 +58,7 @@ export class MedicationController {
     }
   }
 
+  @Role([ERoles.ADMIN, ERoles.DOCTOR, ERoles.PATIENT])
   @Get(':medicationId')
   async findByMedicationId(
     @Param('medicationId') medicationId: string,
@@ -74,6 +83,7 @@ export class MedicationController {
     }
   }
 
+  @Role([ERoles.ADMIN, ERoles.DOCTOR])
   @Get('disease/:disease')
   async findByDisease(
     @Param('disease') disease: string,
