@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  test-colmena-db:
+    image: postgres:16
+    container_name: test-colmena-db
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5437:5432"
+    volumes:
+      - pg_data_new:/var/lib/postgresql/data
+    networks:
+      - nest-network
+
+  test-colmena:
+    build: .
+    container_name: nest-api
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "${PORT}:${PORT}"
+    depends_on:
+      - test-colmena-db
+    networks:
+      - nest-network
+
+volumes:
+  pg_data_new:
+
+networks:
+  nest-network:
